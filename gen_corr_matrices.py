@@ -5,6 +5,13 @@
 import numpy as np
 
 
+#
+# [1,2,3,4,5,6,7,8,9]
+#
+# [1,2,3][4,5,6][7,8,9] n=3, overlap = 0
+#
+# [1,2,3,4,5][3,4,5,6,7][5,6,7,8,9]  n=3, overlap = 3
+
 def gen_corr_m(data:np.ndarray, n:int=1, overlap:int=0):
     '''
     :param data: set
@@ -20,7 +27,7 @@ if __name__ == '__main__':
     # load data
     data = ...
     n = 10
-    overlap = 10
+    overlap = 50
     corr_m = gen_corr_m(data, n, overlap)
 
     #save corr_m

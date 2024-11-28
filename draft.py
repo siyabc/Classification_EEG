@@ -2,6 +2,7 @@ from mne.io import read_epochs_eeglab
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+import pandas as pd
 
 epochs = read_epochs_eeglab(r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Sedation-RestingState\02-2010-anest- 20100210 16.003.set')
 data = epochs.get_data()
@@ -9,6 +10,13 @@ data = epochs.get_data()
 avg_data = np.mean(data, axis=0)
 
 corr_matrix = np.corrcoef(avg_data)
+
+print("Correlation Matrix:")
+print(corr_matrix)
+
+output_path = r'C:\Users\chenzhijia\Desktop\机器学习\correlation_matrix.csv'
+corr_matrix_df = pd.DataFrame(corr_matrix)
+corr_matrix_df.to_csv(output_path, index=False)
 
 G = nx.Graph()
 

@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from mne.io import read_epochs_eeglab
 from scipy.signal import stft
+import sys
 
 def gen_segments(data: np.ndarray, n: int = 3, overlap: int = 100):
     '''
@@ -127,11 +128,15 @@ def process_folder(input_folder: str, output_folder: str, n: int = 3, overlap: i
 
 
 if __name__ == '__main__':
-    # 输入文件夹路径（包含 .set 文件）
-    input_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Sedation-RestingState'
 
-    # 输出文件夹路径（保存特征数据的 CSV 文件）
-    output_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Output'
+    if sys.platform == "win32":
+        # Windows 路径处理
+        input_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Sedation-RestingState'
+        output_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Output'
+    else:
+        # macOS/Linux 路径处理
+        input_folder = r'../Sedation-RestingState'
+        output_folder = r'../Output'
 
     # 设置分段参数
     n = 3

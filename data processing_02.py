@@ -53,7 +53,8 @@ def extract_features_from_segment(segment: np.ndarray, fs: float = 500):
     # 提取相位、频率和幅度
     amplitude = np.abs(Zxx)
     phase = np.angle(Zxx)
-    frequency = np.abs(f[:, np.newaxis] - np.mean(f))  # 频率差异
+    freq_offset = np.abs(f - np.mean(f))
+    frequency = np.tile(freq_offset, (n_channels, len(t)))
 
     # 转换为二维数据 (n_channels, n_frequencies * n_times)
     amplitude = amplitude.reshape(n_channels, -1)
@@ -131,8 +132,8 @@ if __name__ == '__main__':
 
     if sys.platform == "win32":
         # Windows 路径处理
-        input_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Sedation-RestingState'
-        output_folder = r'C:\Users\chenzhijia\Desktop\机器学习\sedation-restingstate\Output'
+        input_folder = r'C:\Users\chenzhijia\Desktop\machine learning\sedation-restingstate\Sedation-RestingState'
+        output_folder = r'C:\Users\chenzhijia\Desktop\machine learning\sedation-restingstate\Output'
     else:
         # macOS/Linux 路径处理
         input_folder = r'../Sedation-RestingState'

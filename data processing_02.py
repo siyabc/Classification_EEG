@@ -53,13 +53,14 @@ def extract_features_from_segment(segment: np.ndarray, fs: float = 500):
     # 提取相位、频率和幅度
     amplitude = np.abs(Zxx)
     phase = np.angle(Zxx)
-    freq_offset = np.abs(f - np.mean(f))
-    frequency = np.tile(freq_offset, (n_channels, len(t)))
+    power = amplitude ** 2
+    dominant_freq_indices = np.argmax(power, axis=1)  # shape: (n_channels, n_times)
+    dominant_freq = f[dominant_freq_indices]  # shape: (n_channels, n_times)
 
     # 转换为二维数据 (n_channels, n_frequencies * n_times)
     amplitude = amplitude.reshape(n_channels, -1)
     phase = phase.reshape(n_channels, -1)
-    frequency = frequency.reshape(n_channels, -1)
+    frequency = dominant_freq.reshape(n_channels, -1)
 
     return amplitude, phase, frequency
 
@@ -116,9 +117,9 @@ def process_folder(input_folder: str, output_folder: str, n: int = 3, overlap: i
             df_frequency = pd.DataFrame(np.concatenate(all_frequency, axis=1))
 
             # 文件路径
-            amplitude_file = os.path.join(amplitude_folder, file_name.replace('.set', '_amplitude.csv'))
-            phase_file = os.path.join(phase_folder, file_name.replace('.set', '_phase.csv'))
-            frequency_file = os.path.join(frequency_folder, file_name.replace('.set', '_frequency.csv'))
+            amplitude_file = os.path.join(amplitude_folder, file_name.replace('.set', '.csv'))
+            phase_file = os.path.join(phase_folder, file_name.replace('.set', '.csv'))
+            frequency_file = os.path.join(frequency_folder, file_name.replace('.set', '.csv'))
 
             # 保存为 CSV 文件
             df_amplitude.to_csv(amplitude_file, index=False)

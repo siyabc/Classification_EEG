@@ -96,7 +96,7 @@ def process_all_set_files(input_folder: str, output_csv_folder: str, output_fig_
 
 if __name__ == '__main__':
     input_folder = r'C:\Users\chenzhijia\Desktop\machine learning\sedation-restingstate\Sedation-RestingState'
-    output_csv_folder = r'C:\Users\chenzhijia\Desktop\machine learning\sedation-restingstate\done'
+    output_csv_folder = r'C:\Users\chenzhijia\Desktop\machine learning\sedation-restingstate\done\Frequency intensity'
     output_fig_folder = os.path.join(output_csv_folder, 'Power spectrum')
 
     process_all_set_files(input_folder, output_csv_folder, output_fig_folder)
